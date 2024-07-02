@@ -1,0 +1,34 @@
+{
+  "news": [
+    {
+      "headline": "Scientists Make Breakthrough in Cancer Research",
+      "description": "Researchers have discovered a promising new treatment that shows potential in combating various forms of cancer. The treatment targets specific genetic markers...",
+      "author": "Dr. Emily Johnson"
+    },
+    {
+      "headline": "Global Leaders Reach Agreement on Climate Change",
+      "description": "After intense negotiations, world leaders have finally agreed on a comprehensive plan to address climate change. The agreement aims to reduce greenhouse gas emissions...",
+      "author": "John Smith"
+    },
+    {
+      "headline": "New Technology Revolutionizes Renewable Energy Sector",
+      "description": "A groundbreaking innovation has emerged in the renewable energy sector, promising to increase efficiency and reduce costs. The new technology utilizes advanced...",
+      "author": "Sarah Lee"
+    },
+    {
+      "headline": "SpaceX Launches Mission to Mars",
+      "description": "SpaceX successfully launched its latest mission to Mars, carrying advanced equipment for planetary exploration. The mission aims to gather crucial data...",
+      "author": "Elon Musk"
+    },
+    {
+      "headline": "Artificial Intelligence Enhances Healthcare Diagnostics",
+      "description": "AI-powered diagnostic tools have shown significant improvement in detecting diseases early. The technology is expected to revolutionize healthcare by...",
+      "author": "Dr. Sophia Rodriguez"
+    },
+    {
+      "headline": "Bitcoin Hits Record High Amid Market Turbulence",
+      "description": "Bitcoin's value soared to an all-time high amidst economic uncertainty, highlighting growing interest in cryptocurrencies as alternative investments...",
+      "author": "James Brown"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My ComposeApp</string>
+    <string name="title_activity_desc">DescActivity</string>
+</resources>
