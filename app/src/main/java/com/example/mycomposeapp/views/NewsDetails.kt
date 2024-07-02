@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Card
@@ -21,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -31,9 +34,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberImagePainter
+import com.example.mycomposeapp.R
 
-@Preview
 @Composable
 fun itemDetails(
     description: String?,
@@ -43,7 +47,8 @@ fun itemDetails(
     content: String?,
     context: Context
 ) {
-    Box(
+    /*without ConstraintLayout*/
+    /*Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize(1f)
@@ -59,8 +64,11 @@ fun itemDetails(
         )
         {
             Column(Modifier.fillMaxHeight(1f)) {
+                val painter = rememberImagePainter(data = image?:"",
+                    builder = {placeholder(R.drawable.news)
+                        error(R.drawable.news)})
                 Image(
-                    painter = rememberImagePainter(image),
+                    painter = painter,
                     contentDescription = "",
                     alignment = Alignment.TopStart,
                     contentScale = ContentScale.Crop,
@@ -110,6 +118,67 @@ fun itemDetails(
 
             }
         }
+    }*/
+    /*with ConstraintLayout*/
+    ConstraintLayout(modifier = Modifier.fillMaxSize().padding(10.dp)) {
+        val painter = rememberImagePainter(data = image?:"",
+            builder = {placeholder(R.drawable.news)
+                error(R.drawable.news)})
+        val (image,source,desc,contents,url) = createRefs()
+        Image(
+            painter = painter,
+            contentDescription = "",
+            alignment = Alignment.TopStart,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .constrainAs(image){ top.linkTo(parent.top) }
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(corner = CornerSize(8.dp)))
+        )
+        Text(
+            text = author.toString(),
+            fontSize = 10.sp,
+            color = Color.White,
+            fontWeight = FontWeight.Bold, modifier = Modifier.constrainAs(source){
+                top.linkTo(image.bottom, margin = 10.dp)
+                start.linkTo(parent.start)
+            }
+                .clip(RoundedCornerShape(corner = CornerSize(6.dp)))
+                .background(Color.Red)
+                .padding(vertical = 5.dp, horizontal = 5.dp)
+        )
+        Text(
+            text = description.toString(),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .constrainAs(desc){
+                    top.linkTo(source.bottom, margin = 10.dp)
+                }
+                .fillMaxWidth(1f)
+        )
+        Text(
+            text = content.toString(),
+            fontSize = 16.sp,
+            letterSpacing = 1.sp,
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier
+                .constrainAs(contents){
+                    top.linkTo(desc.bottom,margin = 10.dp)
+                }
+                .fillMaxWidth(1f)
+        )
+
+        ClickableText(
+            text = getAString(link),
+            modifier = Modifier
+                .constrainAs(url){
+                    top.linkTo(contents.bottom, margin = 10.dp)
+                }
+                .fillMaxWidth(1f),
+            onClick = {
+                openSite(link, context)
+            })
     }
 }
 

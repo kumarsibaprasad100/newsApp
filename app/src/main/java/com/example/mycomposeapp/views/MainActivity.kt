@@ -5,7 +5,21 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import com.example.mycomposeapp.models.ArticlesItem
 import com.example.mycomposeapp.utils.Resource
@@ -16,34 +30,46 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var newsViewModels: NewsViewModels
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         newsViewModels = ViewModelProvider(this).get(NewsViewModels::class.java)
-        newsViewModels.fetchData("all")
-        newsViewModels.data.observe(this) {
-            when (it) {
-                is Resource.Success -> {
-                    val newsdata = it.data
-                    if (newsdata != null) {
-                        setContent {
-                            setData(newsdata,newsViewModels)
-                        }
-                    }
-                }
-
-                is Resource.Error -> {
-                    Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT)
-                }
-            }
-
+        newsViewModels.fetchData("Indian")
+        setContent {
+            setData(newsViewModels)
         }
+
     }
 
     @Composable
-    fun setData(newsdata: List<ArticlesItem?>?, newsViewModels: NewsViewModels) {
-        itemView(newsResponse = newsdata, applicationContext,newsViewModels)
+    fun startLoader() {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .width(40.dp)
+                .padding(8.dp),
+            color = MaterialTheme.colorScheme.secondary
+        )
+    }
+
+    @Composable
+    fun setData(newsViewModels: NewsViewModels) {
+        val dataState by newsViewModels.data.observeAsState(initial = Resource.Loading)
+        when (dataState) {
+            is Resource.Success -> {
+                val newsdata = (dataState as Resource.Success).data
+                if (newsdata != null) {
+                    itemView(newsResponse = newsdata, applicationContext, newsViewModels)
+                }
+            }
+
+            is Resource.Error -> {
+                Toast.makeText(applicationContext, (dataState as Resource.Error).message, Toast.LENGTH_SHORT)
+            }
+
+            Resource.Loading -> startLoader()
+        }
+
+
     }
 
 }

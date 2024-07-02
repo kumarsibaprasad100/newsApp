@@ -68,6 +68,8 @@ dependencies {
     implementation (libs.okhttpprofiler)
     implementation (libs.coil.compose)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.androidx.runtime.livedata)
 //    implementation(libs.mediation.test.suite)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.activity)

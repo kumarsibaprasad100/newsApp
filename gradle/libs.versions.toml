@@ -21,6 +21,8 @@ retrofit="2.10.0"
 converter="2.9.0"
 hiltAndroid = "2.48"
 mediationTestSuite = "3.0.0"
+constraintlayoutCompose = "1.0.1"
+runtimeLivedata = "1.6.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,6 +52,8 @@ converter = { group = "com.squareup.retrofit2", name = "converter-gson", version
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
 mediation-test-suite = { group = "com.google.android.ads", name = "mediation-test-suite", version.ref = "mediationTestSuite" }
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutCompose" }
+androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

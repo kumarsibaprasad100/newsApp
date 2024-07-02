@@ -16,10 +16,13 @@ class NewsViewModels @Inject constructor(private val newsRepository: NewsReposit
 
     private val _data = MutableLiveData<Resource<NewsData>>()
     val data: LiveData<Resource<NewsData>> = _data
+    val loading = MutableLiveData<Boolean>()
 
     fun fetchData(mData: String) {
         viewModelScope.launch {
+            loading.value = true
             _data.value = newsRepository.getNewsData(mData)
+            loading.value = true
         }
     }
 

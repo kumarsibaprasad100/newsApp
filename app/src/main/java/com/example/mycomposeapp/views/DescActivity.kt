@@ -39,7 +39,6 @@ class DescActivity : ComponentActivity() {
     }
 }
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun showNewsDesc(

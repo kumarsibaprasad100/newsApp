@@ -14,13 +14,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -35,16 +38,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import com.example.mycomposeapp.R
 import com.example.mycomposeapp.models.ArticlesItem
 import com.example.mycomposeapp.ui.theme.lightRed
 import com.example.mycomposeapp.viewModels.NewsViewModels
@@ -72,7 +79,7 @@ fun itemView(newsResponse: List<ArticlesItem?>?, context: Context, newsViewModel
         Row {
             TextField(value = "$textState",
                 onValueChange = { textState = it },
-                label = { Text("Search") },
+                label = { Text("Search your news") },
                 modifier = Modifier
                     .padding(4.dp)
                     .fillMaxWidth(.7f)
@@ -83,7 +90,7 @@ fun itemView(newsResponse: List<ArticlesItem?>?, context: Context, newsViewModel
                     .padding(4.dp)
                     .fillMaxWidth(1f)
                     .align(Alignment.CenterVertically)
-            ) {
+            , colors = ButtonDefaults.buttonColors(Color.Gray), shape = MaterialTheme.shapes.small) {
                 Text(text = "Search", fontWeight = FontWeight.Bold)
 
             }
@@ -122,8 +129,11 @@ private fun listView(items: ArticlesItem?, context: Context) {
             modifier = Modifier
                 .padding(8.dp)
         ) {
+            val painter = rememberImagePainter(data = items?.urlToImage?:"",
+                builder = {placeholder(R.drawable.news)
+                    error(R.drawable.news)})
             Image(
-                painter = rememberImagePainter(items?.urlToImage),
+                painter = painter,
                 contentDescription = "quotes",
                 alignment = Alignment.TopStart,
                 contentScale = ContentScale.Crop,
@@ -141,6 +151,8 @@ private fun listView(items: ArticlesItem?, context: Context) {
                     maxLines = 2,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
+                        .clip(RoundedCornerShape(corner = CornerSize(6.dp)))
+                        .shadow(2.dp)
                         .fillMaxWidth(1f)
                         .padding(0.dp, 0.dp, 6.dp, 8.dp)
                         .background(color = lightRed)
