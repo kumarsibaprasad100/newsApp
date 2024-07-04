@@ -76,11 +76,11 @@ fun itemView(newsResponse: List<ArticlesItem?>?, context: Context, newsViewModel
             },
             colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Gray)
         )
-        Row {
+        Row(modifier = Modifier.padding(10.dp)) {
             TextField(value = "$textState",
                 onValueChange = { textState = it },
                 label = { Text("Search your news") },
-                modifier = Modifier
+                modifier = Modifier.background(Color.White)
                     .padding(4.dp)
                     .fillMaxWidth(.7f)
             )
@@ -104,7 +104,6 @@ fun itemView(newsResponse: List<ArticlesItem?>?, context: Context, newsViewModel
     }
 }
 
-@Preview
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun listView(items: ArticlesItem?, context: Context) {
@@ -112,6 +111,7 @@ private fun listView(items: ArticlesItem?, context: Context) {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onPrimary),
         elevation = CardDefaults.cardElevation(10.dp),
         modifier = Modifier
+            .padding(10.dp,0.dp,10.dp,0.dp)
             .fillMaxWidth()
             .padding(8.dp)
             .clickable {
@@ -151,10 +151,8 @@ private fun listView(items: ArticlesItem?, context: Context) {
                     maxLines = 2,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
-                        .clip(RoundedCornerShape(corner = CornerSize(6.dp)))
-                        .shadow(2.dp)
                         .fillMaxWidth(1f)
-                        .padding(0.dp, 0.dp, 6.dp, 8.dp)
+                        .padding(0.dp, 0.dp, 0.dp, 8.dp)
                         .background(color = lightRed)
                         .padding(4.dp)
 
